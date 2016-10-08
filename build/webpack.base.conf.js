@@ -5,7 +5,7 @@ var projectRoot = path.resolve(__dirname, '../')
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: './src/main.ts'
   },
   output: {
     path: config.build.assetsRoot,
@@ -13,7 +13,7 @@ module.exports = {
     filename: '[name].js'
   },
   resolve: {
-    extensions: ['', '.js', '.vue'],
+    extensions: ['', '.ts', '.vue', '.js'],
     fallback: [path.join(__dirname, '../node_modules')],
     alias: {
       'vue': 'vue/dist/vue.common.js',
@@ -38,6 +38,12 @@ module.exports = {
         loader: 'eslint',
         include: projectRoot,
         exclude: /node_modules/
+      },
+      {
+        test: /\.ts$/,
+        loader: 'eslint',
+        include: projectRoot,
+        exclude: /node_modules/
       }
     ],
     loaders: [
@@ -46,8 +52,14 @@ module.exports = {
         loader: 'vue'
       },
       {
+        test: /\.ts$/,
+        loader: 'vue-ts',
+        include: projectRoot,
+        exclude: /node_modules/
+      },
+      {
         test: /\.js$/,
-        loader: 'babel',
+        loader: 'vue-ts',
         include: projectRoot,
         exclude: /node_modules/
       },
@@ -77,7 +89,8 @@ module.exports = {
     formatter: require('eslint-friendly-formatter')
   },
   vue: {
-    loaders: utils.cssLoaders(),
+    loaders: Object.assign(utils.cssLoaders(),  { js: 'vue-ts-loader', ts: 'vue-ts-loader' }),
+    esModule: true,
     postcss: [
       require('autoprefixer')({
         browsers: ['last 2 versions']

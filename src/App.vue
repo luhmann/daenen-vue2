@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <img class="logo" src="./assets/logo.png">
     <router-view></router-view>
     <p>
       Welcome to your Vue.js app!
@@ -22,6 +21,9 @@
   </div>
 </template>
 
+<script>
+  export default {}
+</script>
 
 <style>
 html {
